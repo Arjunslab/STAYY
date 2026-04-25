@@ -10,7 +10,10 @@ app.use(express.json());
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: [
+             "http://localhost:5173",
+             "https://stayy.bajpai.dev"
+            ],
     credentials: true,
   })
 );
@@ -35,7 +38,8 @@ app.post("/api/auth/signup", (req, res) => {
   });
 });
 
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
+
 app.listen(PORT, () => {
-  console.log(`Server running on ${PORT}`);
+  console.log("Server running");
 });
