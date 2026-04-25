@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "http://localhost:5000/api", // change if needed
+  baseURL: "https://stayy-backend.vercel.app/api/",
   withCredentials: true, // optional (for cookies)
 });
 
@@ -12,7 +12,6 @@ API.interceptors.request.use((req) => {
   if (token) {
     req.headers.Authorization = `Bearer ${token}`;
   }
-
   return req;
 });
 

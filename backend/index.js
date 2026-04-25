@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import jwt from "jsonwebtoken";
-const SECRET = "your_jwt_secret_key";
+const SECRET = "somthing_secret";
 
 const app = express();
 
