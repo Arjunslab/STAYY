@@ -4,7 +4,7 @@
 
 
 
-/* Glass Card */
+
 .glass-card {
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
@@ -15,7 +15,7 @@
     inset 0 1px rgba(255, 255, 255, 0.05);
 }
 
-/* Inputs */
+
 .input-glass {
   padding: 10px 12px;
   border-radius: 10px;
@@ -35,16 +35,26 @@
   background: rgba(255, 255, 255, 0.06);
 }
 
-/* Button */
+
 .btn-primary {
   padding: 10px;
   border-radius: 10px;
-  background: #facc15; /* yellow-400 */
+  background: #facc15;
   color: black;
   font-weight: 600;
   transition: 0.2s ease;
 }
 
 .btn-primary:hover {
-  background: #eab308; /* yellow-500 */
+  background: #eab308; 
+}
+
+body {
+  cursor: url(./cursor.png) 16 16, auto;
+}
+button:hover, a:hover {
+  cursor: url(./cursor-hover.png) 16 16, pointer;
+}
+h1:hover, h2:hover, h3:hover, h4:hover, h5:hover, h6:hover {
+  cursor: url(./cursor-h1.png) 16 16, pointer;
 }

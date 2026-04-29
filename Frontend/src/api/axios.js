@@ -1,11 +1,10 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "https://stayy-backend.vercel.app/api/",
-  withCredentials: true, // optional (for cookies)
+  baseURL: "http://localhost:5000/api",
+  withCredentials: true
 });
 
-// Attach token automatically
 API.interceptors.request.use((req) => {
   const token = localStorage.getItem("token");
 
