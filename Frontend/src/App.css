@@ -50,11 +50,11 @@
 }
 
 body {
-  cursor: url(./cursor.png) 16 16, auto;
+  cursor: url(/cursor.png) 16 16, auto;
 }
 button:hover, a:hover {
-  cursor: url(./cursor-hover.png) 16 16, pointer;
+  cursor: url(/cursor-hover.png) 16 16, pointer;
 }
 h1:hover, h2:hover, h3:hover, h4:hover, h5:hover, h6:hover {
-  cursor: url(./cursor-h1.png) 16 16, pointer;
+  cursor: url(/cursor-h1.png) 16 16, pointer;
 }
