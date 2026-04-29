@@ -28,7 +28,7 @@ app.post("/api/auth/google", async (req, res) => {
       idToken: token,
       audience: process.env.GOOGLE_CLIENT_ID,
     });
-   console.log("RECEIVED TOKEN:", token);
+
     const payload = ticket.getPayload();
     const { email, name, picture } = payload;
 
@@ -48,15 +48,7 @@ app.post("/api/auth/google", async (req, res) => {
       },
     });
 
-
-
-  app.post("/update/to/database", (req, res) => {
-    const { email, phone, token } = req.body;
-    console.log("Received data:", email, phone);
-    // set email&& phone ? res.json({ message: "Data received successfully" }) : res.status(400).json({ error: "Email and phone are required" });
-
-  });
-   catch (err) {
+  } catch (err) {
     res.status(401).json({ error: "Invalid Google token" });
   }
 });
