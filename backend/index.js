@@ -56,7 +56,7 @@ app.post("/api/auth/google", async (req, res) => {
 
     res.json({
       token: jwtToken,
-      user,
+      user ,
     });
 
   } catch (err) {
