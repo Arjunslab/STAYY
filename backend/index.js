@@ -6,7 +6,7 @@ import bcrypt from "bcryptjs";
 import { OAuth2Client } from "google-auth-library";
 
 import connectDB from "./db.js";
-import User from "./models/User.js";
+import User from "./models/user.js";
 
 dotenv.config();
 connectDB();
