@@ -7,6 +7,7 @@ import { OAuth2Client } from "google-auth-library";
 
 import connectDB from "./db.js";
 import User from "./models/user.js";
+bcrypt.genSalt(10); 
 
 dotenv.config();
 connectDB();
@@ -36,7 +37,7 @@ app.post("/api/auth/google", async (req, res) => {
 
     const payload = ticket.getPayload();
     const { email, name, picture, sub } = payload;
-
+  
     let user = await User.findOne({ email });
 
     if (!user) {

@@ -24,7 +24,7 @@ function App() {
   {/* // axios.get(`http://localhost:5000/hotels?city=${usercity}`); */}
   
 
-  {/* const user_login = false; // Simulating user login status */}
+  
   return (
     <>
    
