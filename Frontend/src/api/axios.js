@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "http://backend.stayy.bajpai.dev/api",
+  baseURL: "https://backend.stayy.bajpai.dev/api",
   withCredentials: true
 });
 
