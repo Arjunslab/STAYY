@@ -12,10 +12,13 @@ import crypto from "crypto";
 
 
 
-const otp = crypto.randomInt(100000, 1000000).toString();
-dotenv.config();
+dotenv.config(); // 1. Load env variables first!
 connectDB();
 
+// 2. Initialize and assign Resend right after config
+const resend = new Resend(process.env.RESEND_KEY); 
+
+const otp = crypto.randomInt(100000, 1000000).toString();
 const app = express();
 
 app.use(
@@ -451,7 +454,7 @@ app.post("/api/auth/verify-otp", async (req, res) => {
   }
 });
 
-new Resend(process.env.RESEND_KEY);
+
 
 async function sendOtpConsentEmail(name, email, otp, verificationLink) {
   try {
