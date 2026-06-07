@@ -2,7 +2,7 @@
   "version": 2,
   "builds": [
     {
-      "src": "backend/index.mjs",
+      "src": "backend/index.js",
       "use": "@vercel/node",
       "config": {
         "includeFiles": ["emails/**"]
@@ -12,7 +12,7 @@
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "backend/index.mjs"
+      "dest": "backend/index.js"
     }
   ]
 }
