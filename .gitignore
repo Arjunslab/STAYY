@@ -1,7 +1,7 @@
-.env
-node_modules
-dist
-dist-ssr
+backend/.env
+backend/node_modules
+backend/dist
+backend/dist-ssr
 *.local
 # Editor directories and files
 .vscode/*
@@ -10,3 +10,9 @@ dist-ssr
 .DS_Store
 *.suo
 *.ntvs*
+
+frontend/.env
+frontend/node_modules
+frontend/dist
+frontend/dist-ssr
+

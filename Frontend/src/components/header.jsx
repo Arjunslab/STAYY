@@ -7,7 +7,9 @@ import { faRightToBracket, faCircleHalfStroke } from "@fortawesome/free-solid-sv
 
 function Headerr() {
   const [user, setUser] = useState(null);
-  const [dark, setDark] = useState(false);
+  const [dark, setDark] = useState(() => {
+    return localStorage.getItem("theme") !== "light";
+  });
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -18,9 +20,12 @@ function Headerr() {
     }
 
     const savedTheme = localStorage.getItem("theme");
-    if (savedTheme === "dark") {
+    if (savedTheme !== "light") {
       document.documentElement.classList.add("dark");
       setDark(true);
+    } else {
+      document.documentElement.classList.remove("dark");
+      setDark(false);
     }
   }, []);
 

@@ -15,7 +15,7 @@ export default function AuthPage() {
     e.preventDefault();
 
     try {
-      const url = isLogin ? "/login" : "/signup";
+      const url = isLogin ? "/auth/login" : "/auth/signup";
 
       const payload = isLogin
         ? { email, password }

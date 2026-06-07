@@ -3,125 +3,144 @@ import { useNavigate } from "react-router-dom";
 import { GoogleLogin } from "@react-oauth/google";
 import API from "../api/axios";
 
-export default function AuthPage() {
-  const [isLogin, setIsLogin] = useState(true);
-  const [name, setName] = useState("");
+export default function LoginPage() {
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (!email) {
+      alert("Please enter your email");
+      return;
+    }
+
     try {
-      const url = isLogin ? "/login" : "/signup";
-      
-      const payload = isLogin
-        ? { email, password }
-        : { name, email, password };
+      setLoading(true);
 
-      const res = await API.post(url, payload);
+      const res = await API.post(
+        "/auth/send-otp",
+        {
+          email,
+        }
+      );
 
-      localStorage.setItem("token", res.data.token);
-      localStorage.setItem("user", JSON.stringify(res.data.user));
+      console.log(
+        "SEND OTP RESPONSE:",
+        res.data
+      );
 
-      navigate("/dashboard");
+      alert(
+        res.data.message ||
+        "OTP sent successfully"
+      );
+
+      navigate("/verify-otp", {
+        state: { email },
+      });
+
     } catch (err) {
-      console.log(err.response?.data || err.message);
+      console.error(err);
+
+      alert(
+        err.response?.data?.error ||
+        "Failed to send OTP"
+      );
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
-
       <div className="glass-card w-[360px] p-8 rounded-2xl">
 
-        {/* Toggle */}
-        <div className="flex mb-6 bg-gray-800 rounded-lg p-1">
-          <button
-            onClick={() => setIsLogin(true)}
-            className={`flex-1 py-2 rounded-lg text-sm ${
-              isLogin ? "bg-yellow-400 text-black" : "text-gray-400"
-            }`}
-          >
-            Login
-          </button>
-          <button
-            onClick={() => setIsLogin(false)}
-            className={`flex-1 py-2 rounded-lg text-sm ${
-              !isLogin ? "bg-yellow-400 text-black" : "text-gray-400"
-            }`}
-          >
-            Signup
-          </button>
-        </div>
-
-        {/* Title */}
         <h1 className="text-2xl font-semibold text-white mb-2">
-          {isLogin ? "Welcome back" : "Create account"}
+          Welcome to STAYY
         </h1>
 
         <p className="text-sm text-gray-400 mb-6">
-          {isLogin
-            ? "Login to continue"
-            : "Start your journey with Stayy"}
+          Enter your email to continue
         </p>
 
-        {/* Form */}
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-
-          {!isLogin && (
-            <input
-              type="text"
-              placeholder="Full Name"
-              className="input-glass"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-          )}
-
+        <form
+          onSubmit={handleSubmit}
+          className="flex flex-col gap-4"
+        >
           <input
             type="email"
-            placeholder="Email"
+            placeholder="Email Address"
             className="input-glass"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) =>
+              setEmail(e.target.value)
+            }
+            required
           />
 
-          <input
-            type="password"
-            placeholder="Password"
-            className="input-glass"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-
-          <button type="submit" className="btn-primary mt-2">
-            {isLogin ? "Login" : "Sign up"}
+          <button
+            type="submit"
+            className="btn-primary mt-2"
+            disabled={loading}
+          >
+            {loading
+              ? "Sending OTP..."
+              : "Continue"}
           </button>
         </form>
 
-        {/* Divider */}
         <div className="flex items-center my-4">
           <div className="flex-grow h-px bg-gray-600"></div>
-          <span className="mx-3 text-gray-400 text-sm">OR</span>
+          <span className="mx-3 text-gray-400 text-sm">
+            OR
+          </span>
           <div className="flex-grow h-px bg-gray-600"></div>
         </div>
 
-        {/* Google Login */}
         <GoogleLogin
-          onSuccess={async (credentialResponse) => {
-            const res = await API.post("/auth/google", {
-              token: credentialResponse.credential,
-            });
+          onSuccess={async (
+            credentialResponse
+          ) => {
+            try {
+              const res =
+                await API.post(
+                  "/auth/google",
+                  {
+                    token:
+                      credentialResponse.credential,
+                  }
+                );
 
-            localStorage.setItem("token", res.data.token);
-            localStorage.setItem("user", JSON.stringify(res.data.user));
+              localStorage.setItem(
+                "token",
+                res.data.token
+              );
 
-            navigate("/dashboard");
+              localStorage.setItem(
+                "user",
+                JSON.stringify(
+                  res.data.user
+                )
+              );
+
+              navigate("/dashboard");
+
+            } catch (err) {
+              console.error(err);
+
+              alert(
+                err.response?.data?.error ||
+                "Google login failed"
+              );
+            }
           }}
-          onError={() => console.log("Google Login Failed")}
+          onError={() =>
+            alert(
+              "Google Login Failed"
+            )
+          }
         />
 
       </div>

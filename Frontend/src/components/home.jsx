@@ -1,23 +1,38 @@
 import { useState, useEffect } from "react";
 
-function Home() {
-  const [darkMode, setDarkMode] = useState(false);
+export default function Home() {
+  const [darkMode, setDarkMode] = useState(
+    document.documentElement.classList.contains("dark")
+  );
 
   useEffect(() => {
-    setDarkMode(localStorage.getItem("darkMode") === "dark");
+    const observer = new MutationObserver(() => {
+      setDarkMode(
+        document.documentElement.classList.contains("dark")
+      );
+    });
+
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+
+    return () => observer.disconnect();
   }, []);
 
   return (
     <div
-      className={`flex flex-row h-screen ${
+      className={`h-screen flow-root ${
         darkMode ? "bg-gray-900" : "bg-blue-100"
       }`}
     >
-      <p className="text-9xl text-gray-700 p-5 m-3">
+      <p
+        className={`text-9xl p-5 m-3 ${
+          darkMode ? "text-white" : "text-gray-700"
+        }`}
+      >
         STAYY : your vacay our priority
       </p>
     </div>
   );
 }
-
-export default Home;
