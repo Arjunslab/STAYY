@@ -4,12 +4,10 @@ import cors from "cors";
 import jwt from "jsonwebtoken";
 import { OAuth2Client } from "google-auth-library";
 import { Resend } from "resend";
-import fs from "fs";
-import path from "path";
 import connectDB from "./db.js";
 import User from "./models/user.js";
 import crypto from "crypto";
-import {  getOtpTemplate, getWelcomeTemplate } from "./emails/templates.js";
+import { getOtpTemplate, getWelcomeTemplate } from "./emails/templates.js";
 
 // 1. Run config first thing!
 dotenv.config();
