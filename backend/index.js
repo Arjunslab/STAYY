@@ -14,7 +14,9 @@ import crypto from "crypto";
 
 const otp = crypto.randomInt(100000, 1000000).toString();
 dotenv.config();
-new Resend(process.env.RESEND_KEY);
+const resend_key = process.env.RESEND_KEY;
+console.log(resend_key);
+new Resend(resend_key);
 connectDB();
 
 const app = express();
