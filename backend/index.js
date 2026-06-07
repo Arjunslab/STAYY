@@ -99,131 +99,6 @@ app.post("/api/auth/google", async (req, res) => {
   }
 });
 
-// Signup
-// app.post("/api/auth/signup", async (req, res) => {
-//   try {
-//     const { name, email, password } = req.body;
-
-//     let user = await User.findOne({ email });
-
-//     if (user) {
-//       return res.status(400).json({
-//         error: "User already exists",
-//       });
-//     }
-
-//     const hashedPassword = await bcrypt.hash(password, 10);
-
-//     user = await User.create({
-//       name,
-//       email,
-//       password: hashedPassword,
-//     });
-
-//     sendWelcomeEmail(name, email).catch((err) => {
-//       console.error("Failed to send welcome email:", err);
-//     });
-
-//     const token = jwt.sign(
-//       {
-//         id: user._id,
-//         email: user.email,
-//       },
-//       process.env.JWT_SECRET,
-//       {
-//         expiresIn: "7d",
-//       }
-//     );
-
-//     const safeUser = {
-//       id: user._id,
-//       name: user.name,
-//       email: user.email,
-//       avatar: user.avatar,
-//       phone: user.phone,
-//     };
-
-//     res.json({
-//       token,
-//       user: safeUser,
-//     });
-//   } catch (err) {
-//     console.error(err);
-
-//     res.status(500).json({
-//       error: "Signup failed",
-//     });
-//   }
-// });
-
-// // Login
-// app.post("/api/auth/login", async (req, res) => {
-//   try {
-//     const { email, password } = req.body;
-
-//     const user = await User.findOne({ email });
-
-//     if (!user) {
-//       return res.status(404).json({
-//         error: "User not found",
-//       });
-//     }
-
-//     if (!user.password) {
-//       return res.status(400).json({
-//         error: "Use Google Sign In",
-//       });
-//     }
-//     if (!user.emailVerified) {
-//       return res.status(403).json({
-//         error: "Please verify your email first",
-//       });
-//     }
-
-//     const isMatch = await bcrypt.compare(
-//       password,
-//       user.password
-//     );
-
-//     if (!isMatch) {
-//       return res.status(401).json({
-//         error: "Invalid password",
-//       });
-//     }
-
-//     const token = jwt.sign(
-//       {
-//         id: user._id,
-//         email: user.email,
-//       },
-//       process.env.JWT_SECRET,
-//       {
-//         expiresIn: "7d",
-//       }
-//     );
-
-//     const safeUser = {
-//       id: user._id,
-//       name: user.name,
-//       email: user.email,
-//       avatar: user.avatar,
-//       phone: user.phone,
-//     };
-
-//     res.json({
-//       token,
-//       user: safeUser,
-//     });
-//   } catch (err) {
-//     console.error(err);
-
-//     res.status(500).json({
-//       error: "Login failed",
-//     });
-//   }
-// });
-
-
 
 
 app.post("/api/account/update-info", async (req, res) => {
@@ -578,16 +453,6 @@ app.post("/api/auth/verify-otp", async (req, res) => {
 });
 
 
-
-
-
-
-
-
-
-
-
-
 async function sendOtpConsentEmail(name, email, otp, verificationLink) {
   try {
     const html = fs.readFileSync(
@@ -664,30 +529,15 @@ async function sendWelcomeEmail(name, email) {
 
 
 
+
+
+
+
+
+
+
+
+
 app.listen(process.env.PORT || 5000, () => {
   console.log("Server running");
 });
-
-
-
-
-
-
-
-
-
-
-// import { Resend } from 'resend';
-// import dotenv from "dotenv"
-// dotenv.config();
-
-// const resend = new Resend(process.env.RESEND_KEY);
-// if
-
-// resend.emails.send({
-//   from: 'Arjun Bajpai <Arjun@stayy.bajpai.dev>',
-//   to: ['arjunb5454@proton.me'],
-//   subject: 'helloooooooooooo',
-//   html: '<p>it works!</p>',
-// });
-
