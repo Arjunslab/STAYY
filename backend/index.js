@@ -10,16 +10,17 @@ import connectDB from "./db.js";
 import User from "./models/user.js";
 import crypto from "crypto";
 
-
-
-dotenv.config(); // 1. Load env variables first!
+// 1. Run config first thing!
+dotenv.config();
 connectDB();
 
-// 2. Initialize and assign Resend right after config
-const resend = new Resend(process.env.RESEND_KEY); 
+// 2. Initialize Resend here and assign it to a lowercase 'resend' variable
+const resend = new Resend(process.env.RESEND_KEY || process.env.RESEND_API_KEY);
 
 const otp = crypto.randomInt(100000, 1000000).toString();
 const app = express();
+
+// ... rest of your middleware (app.use) and routes ...
 
 app.use(
   cors({
