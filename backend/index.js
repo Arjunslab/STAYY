@@ -9,6 +9,7 @@ import path from "path";
 import connectDB from "./db.js";
 import User from "./models/user.js";
 import crypto from "crypto";
+import {  getOtpTemplate, getWelcomeTemplate } from "./emails/templates.js";
 
 // 1. Run config first thing!
 dotenv.config();
@@ -457,17 +458,14 @@ app.post("/api/auth/verify-otp", async (req, res) => {
 
 
 
-async function sendOtpConsentEmail(name, email, otp, verificationLink) {
+async function sendOtpConsentEmail(name, email, otp) {
   try {
-    const html = fs.readFileSync(
-      path.join(process.cwd(), "emails", "otp_consent.html"),
-      "utf8"
-    );
+    const html = getOtpTemplate(name, otp);
 
     const finalHtml = html
       .replace(/{{name}}/g, name)
       .replace(/{{OTP}}/g, otp)
-      .replace(/{{verificationLink}}/g, verificationLink);
+      
 
     await resend.emails.send({
       from: "STAYY <no-reply@stayy.bajpai.dev>",
@@ -494,11 +492,7 @@ async function sendOtpConsentEmail(name, email, otp, verificationLink) {
 
 async function sendWelcomeEmail(name, email) {
   try {
-    const html = fs.readFileSync(
-      path.join(process.cwd(), "emails", "welcome.html"),
-      "utf8"
-    );
-
+    const html = getWelcomeTemplate(name);
     const finalHtml = html.replace(
       "{{name}}",
       name
