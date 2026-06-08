@@ -343,6 +343,7 @@ app.post("/api/auth/send-otp", async (req, res) => {
       });
     }
 
+
     const otp = crypto
       .randomInt(100000, 1000000)
       .toString();
@@ -367,11 +368,20 @@ app.post("/api/auth/send-otp", async (req, res) => {
       await user.save();
     }
 
+    const verificationToken = jwt.sign(
+  { email, otp },
+  process.env.JWT_SECRET,
+  { expiresIn: "10m" }
+);
+
+const verificationLink =
+  `https://stayy.bajpai.dev/verify-email?token=${verificationToken}`;
+
     await sendOtpConsentEmail(
-      user.name || "User",
+      user.name,
       email,
       otp,
-      "#"
+      verificationLink
     );
 
     res.json({
@@ -406,6 +416,8 @@ app.post("/api/auth/verify-otp", async (req, res) => {
         error: "User not found",
       });
     }
+
+    
 
     if (
       user.emailOtp !== otp ||
