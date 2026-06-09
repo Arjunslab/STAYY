@@ -1,6 +1,14 @@
 import { useState, useEffect } from "react";
-
+import { useNavigate } from "react-router-dom";
 export default function Contact() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      navigate('/dashboard');
+    }
+  }, [navigate]);
   const [darkMode, setDarkMode] = useState(
     document.documentElement.classList.contains("dark")
   );

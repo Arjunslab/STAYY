@@ -16,18 +16,6 @@ import AddPhone from "./pages/add_phone";
 
  
 function App() {
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      navigate('/dashboard');
-    }
-  }, [navigate]);
-
-  const [usercity, setUserCity] = useState("Delhi");
-  
-  {/* // axios.get(`http://localhost:5000/hotels?city=${usercity}`); */}
   
   return (
     <>
